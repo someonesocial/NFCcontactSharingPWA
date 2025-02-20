@@ -1,26 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="manifest" href="manifest.json">
-    <title>NFC Contact PWA</title>
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('service-worker.js')
-                    .then(registration => {
-                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                    })
-                    .catch(error => {
-                        console.error('ServiceWorker registration failed: ', error);
-                    });
-            });
-        }
-    </script>
-</head>
-<body>
-    <div id="root"></div>
-    <script src="../src/index.tsx" type="module"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NFC Contact Sharing</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="manifest" href="/manifest.json" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>NFC Contact Sharing</h1>
+      <p>Willkommen! Du bist erfolgreich angemeldet.</p>
+      <p>Dein Token: <span id="token"></span></p>
+      <button id="logout">Abmelden</button>
+      <form>
+        <label for="firstName">Vorname:</label>
+        <input
+          type="text"
+          id="firstName"
+          name="firstName"
+          required
+        /><br /><br />
+
+        <label for="lastName">Nachname:</label>
+        <input type="text" id="lastName" name="lastName" required /><br /><br />
+
+        <label for="phoneNumber">Telefonnummer:</label>
+        <input
+          type="text"
+          id="phoneNumber"
+          name="phoneNumber"
+          required
+        /><br /><br />
+
+        <button type="button" id="writeNFC">Daten auf NFC schreiben</button>
+        <button type="button" id="readNFC">Daten von NFC lesen</button>
+      </form>
+    </div>
+    <div id="overlay">
+      <p id="overlayMessage">
+        NFC-Tag erkannt. Bitte halten Sie das Tag in der Nähe.
+      </p>
+      <button id="saveContact" style="display: none">
+        Als Kontakt speichern
+      </button>
+    </div>
+
+    <script type="module" src="/js/app.js"></script>
+  </body>
 </html>
