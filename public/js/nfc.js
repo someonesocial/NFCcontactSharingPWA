@@ -1,15 +1,15 @@
 export function initNFC() {
-  const writeButton = document.getElementById("writeNFC");
-  const readButton = document.getElementById("readNFC");
   const overlay = document.getElementById("overlay");
   const overlayMessage = document.getElementById("overlayMessage");
-  const saveContactButton = document.getElementById("saveContact");
   let vcardContent = "";
 
   function showOverlayTillTap(message, showButton = false) {
     overlayMessage.textContent = message;
     overlay.style.display = "flex";
-    saveContactButton.style.display = showButton ? "block" : "none";
+    const saveContactButton = document.getElementById("saveContact");
+    if (saveContactButton) {
+      saveContactButton.style.display = showButton ? "block" : "none";
+    }
   }
 
   overlay.addEventListener("click", (event) => {
@@ -18,11 +18,33 @@ export function initNFC() {
     }
   });
 
-  writeButton.addEventListener("click", writeNFCData);
-  readButton.addEventListener("click", readNFCData);
-  saveContactButton.addEventListener("click", handleSaveContact);
+  // Alle NFC-bezogenen Elemente finden
+  const writeButton = document.getElementById("writeNFC");
+  const readButton = document.getElementById("readNFC");
+  const saveContactButton = document.getElementById("saveContact");
 
-  async function writeNFCData() {
+  // Event-Listener hinzufügen, falls die Elemente existieren
+  if (writeButton) {
+    writeButton.addEventListener("click", () => {
+      // Prüfen, ob wir eine URL oder eine vCard schreiben
+      const urlElement = document.getElementById("contact-url");
+      if (urlElement && urlElement.href) {
+        writeUrlToNFC(urlElement.href);
+      } else {
+        writeContactToNFC();
+      }
+    });
+  }
+
+  if (readButton) {
+    readButton.addEventListener("click", readNFCData);
+  }
+
+  if (saveContactButton) {
+    saveContactButton.addEventListener("click", handleSaveContact);
+  }
+
+  async function writeContactToNFC() {
     if (!("NDEFReader" in window)) {
       alert("Web NFC wird von diesem Browser nicht unterstützt.");
       return;
@@ -46,6 +68,35 @@ export function initNFC() {
     } catch (error) {
       console.error("Fehler beim Schreiben auf das NFC-Tag:", error);
       alert("Fehler beim Schreiben auf das NFC-Tag.");
+    }
+  }
+
+  // URL auf NFC-Tag schreiben
+  async function writeUrlToNFC(url) {
+    if (!("NDEFReader" in window)) {
+      alert(
+        "Web NFC wird von diesem Browser nicht unterstützt. Verwenden Sie Chrome für Android."
+      );
+      return;
+    }
+
+    try {
+      showOverlayTillTap("Bitte halten Sie das NFC-Tag an Ihr Gerät");
+
+      const ndef = new NDEFReader();
+      await ndef.write({
+        records: [{ recordType: "url", data: url }],
+      });
+
+      showOverlayTillTap("URL erfolgreich auf NFC-Tag geschrieben!");
+
+      setTimeout(() => {
+        overlay.style.display = "none";
+      }, 2000);
+    } catch (error) {
+      console.error("Fehler beim Schreiben auf das NFC-Tag:", error);
+      alert("Fehler beim Schreiben auf das NFC-Tag: " + error.message);
+      overlay.style.display = "none";
     }
   }
 
@@ -104,4 +155,8 @@ export function initNFC() {
       );
     }
   }
+
+  return {
+    writeUrlToNFC,
+  };
 }

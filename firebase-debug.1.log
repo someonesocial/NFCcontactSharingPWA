@@ -1,0 +1,40 @@
+[debug] [2025-03-04T13:41:29.734Z] ----------------------------------------------------------------------
+[debug] [2025-03-04T13:41:29.738Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Paul Klemm\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve --only hosting
+[debug] [2025-03-04T13:41:29.739Z] CLI Version:   13.31.1
+[debug] [2025-03-04T13:41:29.739Z] Platform:      win32
+[debug] [2025-03-04T13:41:29.739Z] Node Version:  v20.9.0
+[debug] [2025-03-04T13:41:29.739Z] Time:          Tue Mar 04 2025 14:41:29 GMT+0100 (Mitteleuropäische Normalzeit)
+[debug] [2025-03-04T13:41:29.739Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-03-04T13:41:30.065Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-03-04T13:41:30.066Z] > authorizing via signed-in user (max135mustermann@gmail.com)
+[debug] [2025-03-04T13:41:30.066Z] [iam] checking project nfccontactsharingpwa for permissions ["firebase.projects.get"]
+[debug] [2025-03-04T13:41:30.068Z] Checked if tokens are valid: true, expires at: 1741098801429
+[debug] [2025-03-04T13:41:30.068Z] Checked if tokens are valid: true, expires at: 1741098801429
+[debug] [2025-03-04T13:41:30.069Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/nfccontactsharingpwa:testIamPermissions [none]
+[debug] [2025-03-04T13:41:30.070Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/nfccontactsharingpwa:testIamPermissions x-goog-quota-user=projects/nfccontactsharingpwa
+[debug] [2025-03-04T13:41:30.070Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/nfccontactsharingpwa:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2025-03-04T13:41:30.334Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/nfccontactsharingpwa:testIamPermissions 200
+[debug] [2025-03-04T13:41:30.334Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/nfccontactsharingpwa:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2025-03-04T13:41:30.335Z] Checked if tokens are valid: true, expires at: 1741098801429
+[debug] [2025-03-04T13:41:30.335Z] Checked if tokens are valid: true, expires at: 1741098801429
+[debug] [2025-03-04T13:41:30.335Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/nfccontactsharingpwa [none]
+[debug] [2025-03-04T13:41:30.976Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/nfccontactsharingpwa 200
+[debug] [2025-03-04T13:41:30.976Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/nfccontactsharingpwa {"projectNumber":"752555233047","projectId":"nfccontactsharingpwa","lifecycleState":"ACTIVE","name":"nfccontactsharingpwa","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2025-02-20T09:05:31.345654Z"}
+[debug] [2025-03-04T13:41:30.978Z] Checked if tokens are valid: true, expires at: 1741098801429
+[debug] [2025-03-04T13:41:30.978Z] Checked if tokens are valid: true, expires at: 1741098801429
+[debug] [2025-03-04T13:41:30.979Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/nfccontactsharingpwa/sites 
+[debug] [2025-03-04T13:41:32.012Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/nfccontactsharingpwa/sites 200
+[debug] [2025-03-04T13:41:32.012Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/nfccontactsharingpwa/sites {"sites":[{"name":"projects/nfccontactsharingpwa/sites/nfccontactsharingpwa","defaultUrl":"https://nfccontactsharingpwa.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2025-03-04T13:41:32.012Z] Checked if tokens are valid: true, expires at: 1741098801429
+[debug] [2025-03-04T13:41:32.013Z] Checked if tokens are valid: true, expires at: 1741098801429
+[debug] [2025-03-04T13:41:32.013Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/nfccontactsharingpwa/webApps/-/config [none]
+[debug] [2025-03-04T13:41:32.512Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/nfccontactsharingpwa/webApps/-/config 200
+[debug] [2025-03-04T13:41:32.513Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/nfccontactsharingpwa/webApps/-/config {"projectId":"nfccontactsharingpwa","storageBucket":"nfccontactsharingpwa.firebasestorage.app","apiKey":"AIzaSyB6FyQg3gn3PQyAyOVOFJBtuvnc9U_wONc","authDomain":"nfccontactsharingpwa.firebaseapp.com","messagingSenderId":"752555233047"}
+[debug] [2025-03-04T13:41:32.524Z] Checked if tokens are valid: true, expires at: 1741098801429
+[debug] [2025-03-04T13:41:32.524Z] Checked if tokens are valid: true, expires at: 1741098801429
+[debug] [2025-03-04T13:41:32.525Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/nfccontactsharingpwa [none]
+[debug] [2025-03-04T13:41:33.010Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/nfccontactsharingpwa 200
+[debug] [2025-03-04T13:41:33.010Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/nfccontactsharingpwa {"projectId":"nfccontactsharingpwa","projectNumber":"752555233047","displayName":"nfccontactsharingpwa","name":"projects/nfccontactsharingpwa","resources":{"hostingSite":"nfccontactsharingpwa"},"state":"ACTIVE","etag":"1_f5bab5c7-969f-468f-9ce7-3d4ff98ef61d"}
+[info] i  hosting[nfccontactsharingpwa]: Serving hosting files from: public {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mpublic\u001b[22m"}}
+[info] +  hosting[nfccontactsharingpwa]: Local server: http://localhost:5002 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://localhost:5002\u001b[22m\u001b[24m"}}
