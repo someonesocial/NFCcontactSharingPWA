@@ -22,12 +22,18 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Login-Status anzeigen
   auth.onAuthStateChanged((user) => {
     const loginStatus = document.getElementById("login-status");
-    if (user) {
-      loginStatus.innerHTML =
-        "Sie sind angemeldet und können Kontakte erstellen.";
-    } else {
-      loginStatus.innerHTML =
-        "Nicht angemeldet. Einige Funktionen könnten eingeschränkt sein.";
+    if (loginStatus) {
+      if (user) {
+        loginStatus.innerHTML =
+          "Sie sind angemeldet und können Kontakte erstellen.";
+      } else {
+        loginStatus.innerHTML =
+          "Nicht angemeldet. Einige Funktionen könnten eingeschränkt sein.";
+      }
+      console.log(
+        "Auth state changed:",
+        user ? "angemeldet" : "nicht angemeldet"
+      );
     }
   });
 
@@ -78,35 +84,5 @@ function showContactSuccess(contactId) {
   contactUrlElement.textContent = contactUrl;
 }
 
-// NFC URL Schreiben
-async function writeUrlToNFC(url) {
-  if (!("NDEFReader" in window)) {
-    alert(
-      "Web NFC wird von diesem Browser nicht unterstützt. Verwenden Sie Chrome für Android."
-    );
-    return;
-  }
-
-  try {
-    const overlay = document.getElementById("overlay");
-    const overlayMessage = document.getElementById("overlayMessage");
-
-    overlay.style.display = "flex";
-    overlayMessage.textContent = "Bitte halten Sie das NFC-Tag an Ihr Gerät";
-
-    const ndef = new NDEFReader();
-    await ndef.write({
-      records: [{ recordType: "url", data: url }],
-    });
-
-    overlayMessage.textContent = "URL erfolgreich auf NFC-Tag geschrieben!";
-
-    setTimeout(() => {
-      overlay.style.display = "none";
-    }, 2000);
-  } catch (error) {
-    console.error("Fehler beim Schreiben auf das NFC-Tag:", error);
-    alert("Fehler beim Schreiben auf das NFC-Tag: " + error.message);
-    document.getElementById("overlay").style.display = "none";
-  }
-}
+// Diese Funktion entfernen, da sie in nfc.js bereits existiert
+// writeUrlToNFC wird über nfcHandler bereitgestellt
