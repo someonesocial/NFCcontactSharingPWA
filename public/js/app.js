@@ -16,10 +16,28 @@ document.addEventListener("DOMContentLoaded", async () => {
   setupAuth();
   const nfcHandler = initNFC();
 
-  // Anonym anmelden
-  await signInAnon();
+  const loginStatus = document.getElementById("login-status");
+  if (loginStatus) {
+    loginStatus.innerHTML = "Melde an...";
+  }
 
-  // Login-Status anzeigen
+  try {
+    // Anonym anmelden und auf Ergebnis warten
+    const user = await signInAnon();
+
+    // Status sofort aktualisieren
+    if (loginStatus) {
+      loginStatus.innerHTML =
+        "Sie sind angemeldet und können Kontakte erstellen.";
+    }
+  } catch (error) {
+    if (loginStatus) {
+      loginStatus.innerHTML =
+        "Anmeldung fehlgeschlagen. Einige Funktionen sind eingeschränkt.";
+    }
+  }
+
+  // Weiterhin auf Änderungen des Auth-Status hören
   auth.onAuthStateChanged((user) => {
     const loginStatus = document.getElementById("login-status");
     if (loginStatus) {
