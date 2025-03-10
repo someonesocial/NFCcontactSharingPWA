@@ -6,8 +6,11 @@ node_modules/
 # Firebase
 .firebase/
 firebase-debug.log
+firebase-debug*.log
 ui-debug.log
 .runtimeconfig.json
+*-debug.log
+firebase-export-*
 
 # Production build
 /build
