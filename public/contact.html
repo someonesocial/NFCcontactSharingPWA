@@ -13,14 +13,6 @@
     />
   </head>
   <body>
-    <div class="status-bar">
-      <div class="time" id="current-time">9:30</div>
-      <div class="icons">
-        <div class="wifi">▲</div>
-        <div class="battery">▉</div>
-      </div>
-    </div>
-
     <div class="main-content">
       <div class="contact-card">
         <h1>Kontakt Details</h1>
@@ -40,21 +32,8 @@
 
     <script type="module" src="/js/view-contact.js"></script>
     <script>
-      // Update time in status bar
-      function updateTime() {
-        const now = new Date();
-        let hours = now.getHours();
-        let minutes = now.getMinutes();
-        if (minutes < 10) minutes = "0" + minutes;
-        document.getElementById(
-          "current-time"
-        ).textContent = `${hours}:${minutes}`;
-      }
-
+      // Remove time update as it's no longer needed
       document.addEventListener("DOMContentLoaded", () => {
-        updateTime();
-        setInterval(updateTime, 60000);
-
         // Hide install button if not installable
         const installBtn = document.getElementById("install-app");
         if (installBtn) {

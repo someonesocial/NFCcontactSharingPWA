@@ -22,16 +22,6 @@ if ("serviceWorker" in navigator) {
     );
 }
 
-// Update time in status bar
-function updateTime() {
-  const now = new Date();
-  let hours = now.getHours();
-  let minutes = now.getMinutes();
-  if (minutes < 10) minutes = "0" + minutes;
-
-  document.getElementById("current-time").textContent = `${hours}:${minutes}`;
-}
-
 // Show selected view
 window.showView = function (viewId) {
   // Hide all views
@@ -54,10 +44,6 @@ window.showView = function (viewId) {
 
 // Main initialization
 document.addEventListener("DOMContentLoaded", async () => {
-  // Update time every minute
-  updateTime();
-  setInterval(updateTime, 60000);
-
   // Initialize NFC
   const nfcHandler = initNFC();
 
