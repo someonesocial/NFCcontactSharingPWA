@@ -1,13 +1,19 @@
 // Local storage key for contacts
 const CONTACTS_STORAGE_KEY = "nfc_saved_contacts";
 
+// Import normalized contact format function
+import { normalizeContactData } from "./contacts.js";
+
 // Save a contact to local storage
 export function saveContactToLocalStorage(contact) {
-  // Add timestamp
+  // Normalize the contact data first
+  const normalizedContact = normalizeContactData(contact);
+
+  // Add timestamp and ensure ID
   const contactWithTimestamp = {
-    ...contact,
+    ...normalizedContact,
     savedAt: new Date().toISOString(),
-    id: contact.id || generateId(),
+    id: normalizedContact.id || generateId(),
   };
 
   // Get existing contacts

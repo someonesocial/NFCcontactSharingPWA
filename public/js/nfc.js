@@ -64,22 +64,21 @@ export function initNFC() {
       return;
     }
 
-    // Create vCard format
-    const vcard = createVCard(contactData);
+    // Make sure we have a share URL to write
+    if (!contactData.shareUrl) {
+      alert("Keine Teilen-URL für diesen Kontakt verfügbar.");
+      return;
+    }
 
     try {
       showOverlay("Bitte halten Sie das NFC-Tag an Ihr Gerät");
 
       const ndef = new NDEFReader();
       await ndef.write({
-        records: [
-          { recordType: "mime", mediaType: "text/vcard", data: vcard },
-          // Also add a URL record for better compatibility with different readers
-          { recordType: "url", data: window.location.origin },
-        ],
+        records: [{ recordType: "url", data: contactData.shareUrl }],
       });
 
-      showOverlay("Kontakt erfolgreich auf NFC-Tag geschrieben!");
+      showOverlay("Kontakt-URL erfolgreich auf NFC-Tag geschrieben!");
 
       setTimeout(() => {
         hideOverlay();
@@ -209,12 +208,34 @@ export function initNFC() {
                 hideOverlay();
                 resolve(contactData);
               } else if (text.startsWith("http")) {
-                // It's a URL - we can't do much with it directly
-                hideOverlay();
-                resolve({
-                  url: text,
-                  isUrl: true,
-                });
+                // It's a URL - extract the token if it's a contact sharing URL
+                try {
+                  const url = new URL(text);
+                  const token = url.searchParams.get("token");
+
+                  if (token) {
+                    console.log("Found contact token in URL:", token);
+                    hideOverlay();
+                    resolve({
+                      isUrl: true,
+                      url: text,
+                      token: token,
+                    });
+                  } else {
+                    hideOverlay();
+                    resolve({
+                      isUrl: true,
+                      url: text,
+                    });
+                  }
+                } catch (e) {
+                  // Not a valid URL
+                  hideOverlay();
+                  resolve({
+                    isUrl: true,
+                    url: text,
+                  });
+                }
               } else {
                 // Just some text
                 hideOverlay();

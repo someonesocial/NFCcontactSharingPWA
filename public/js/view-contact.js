@@ -1,25 +1,74 @@
-import { getContactById } from "./contacts.js";
+import {
+  getContactById,
+  getContactByToken,
+  downloadContactAsVCard,
+  normalizeContactData,
+} from "./contacts.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
-  // Kontakt-ID aus der URL holen
+  // Get contact ID or token from URL
   const urlParams = new URLSearchParams(window.location.search);
   const contactId = urlParams.get("id");
+  const shareToken = urlParams.get("token");
 
-  if (!contactId) {
+  if (!contactId && !shareToken) {
     document.getElementById("contact-details").innerHTML =
       "<p>Fehler: Kein Kontakt angegeben</p>";
     return;
   }
 
   try {
-    // Kontaktdaten laden
-    const contactData = await getContactById(contactId);
+    // Load contact data by ID or token
+    let contactData;
+    if (contactId) {
+      contactData = await getContactById(contactId);
+    } else if (shareToken) {
+      contactData = await getContactByToken(shareToken);
+    }
+
     displayContactDetails(contactData);
 
-    // Kontakt-Speichern-Funktion einrichten
+    // Setup contact save function
     document.getElementById("save-contact").addEventListener("click", () => {
-      saveContact(contactData);
+      downloadContactAsVCard(contactData);
     });
+
+    // Add install app functionality
+    const installBtn = document.getElementById("install-app");
+    if (installBtn) {
+      let deferredPrompt;
+
+      window.addEventListener("beforeinstallprompt", (e) => {
+        // Prevent Chrome 67 and earlier from automatically showing the prompt
+        e.preventDefault();
+        // Stash the event so it can be triggered later
+        deferredPrompt = e;
+        // Show the install button
+        installBtn.style.display = "block";
+      });
+
+      installBtn.addEventListener("click", (e) => {
+        if (!deferredPrompt) {
+          alert(
+            "Diese App kann momentan nicht installiert werden. Bitte versuchen Sie es später oder besuchen Sie die Website direkt."
+          );
+          return;
+        }
+
+        // Show the install prompt
+        deferredPrompt.prompt();
+
+        // Wait for the user to respond to the prompt
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === "accepted") {
+            console.log("User accepted the install prompt");
+          } else {
+            console.log("User dismissed the install prompt");
+          }
+          deferredPrompt = null;
+        });
+      });
+    }
   } catch (error) {
     document.getElementById(
       "contact-details"
@@ -28,55 +77,45 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 function displayContactDetails(contact) {
+  // Ensure we have a normalized contact
+  const normalizedContact = normalizeContactData(contact);
   const contactDetails = document.getElementById("contact-details");
 
   const html = `
-    <div class="contact-card">
-      <h2>${contact.firstName} ${contact.lastName}</h2>
+    <div class="contact-info">
+      <h2>${normalizedContact.firstName} ${normalizedContact.lastName}</h2>
       ${
-        contact.company
-          ? `<p><strong>Firma:</strong> ${contact.company}</p>`
+        normalizedContact.company
+          ? `<div class="contact-field"><span class="field-label">Firma:</span> <span class="field-value">${normalizedContact.company}</span></div>`
           : ""
       }
       ${
-        contact.position
-          ? `<p><strong>Position:</strong> ${contact.position}</p>`
+        normalizedContact.position
+          ? `<div class="contact-field"><span class="field-label">Position:</span> <span class="field-value">${normalizedContact.position}</span></div>`
           : ""
       }
       ${
-        contact.email
-          ? `<p><strong>E-Mail:</strong> <a href="mailto:${contact.email}">${contact.email}</a></p>`
+        normalizedContact.email
+          ? `<div class="contact-field"><span class="field-label">E-Mail:</span> <span class="field-value"><a href="mailto:${normalizedContact.email}">${normalizedContact.email}</a></span></div>`
           : ""
       }
       ${
-        contact.phoneNumber
-          ? `<p><strong>Telefon:</strong> <a href="tel:${contact.phoneNumber}">${contact.phoneNumber}</a></p>`
+        normalizedContact.phoneNumber
+          ? `<div class="contact-field"><span class="field-label">Telefon:</span> <span class="field-value"><a href="tel:${normalizedContact.phoneNumber}">${normalizedContact.phoneNumber}</a></span></div>`
+          : ""
+      }
+      ${
+        normalizedContact.address
+          ? `<div class="contact-field"><span class="field-label">Adresse:</span> <span class="field-value">${normalizedContact.address}</span></div>`
+          : ""
+      }
+      ${
+        normalizedContact.website
+          ? `<div class="contact-field"><span class="field-label">Website:</span> <span class="field-value website"><a href="${normalizedContact.website}" target="_blank">${normalizedContact.website}</a></span></div>`
           : ""
       }
     </div>
   `;
 
   contactDetails.innerHTML = html;
-}
-
-function saveContact(contact) {
-  // vCard erstellen
-  const vcardData = `BEGIN:VCARD
-VERSION:3.0
-N:${contact.lastName};${contact.firstName};;;
-FN:${contact.firstName} ${contact.lastName}
-${contact.email ? `EMAIL:${contact.email}` : ""}
-${contact.phoneNumber ? `TEL:${contact.phoneNumber}` : ""}
-${contact.company ? `ORG:${contact.company}` : ""}
-${contact.position ? `TITLE:${contact.position}` : ""}
-END:VCARD`;
-
-  // Als Datei zum Download anbieten
-  const blob = new Blob([vcardData], { type: "text/vcard" });
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = `${contact.firstName}_${contact.lastName}.vcf`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
 }

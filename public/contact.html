@@ -6,15 +6,63 @@
     <title>Kontakt Ansicht</title>
     <link rel="stylesheet" href="/css/main.css" />
     <link rel="manifest" href="/manifest.json" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
   </head>
   <body>
-    <div class="container">
-      <h1>Kontakt Details</h1>
-      <div id="contact-details">
-        <p>Lade Kontaktdetails...</p>
+    <div class="status-bar">
+      <div class="time" id="current-time">9:30</div>
+      <div class="icons">
+        <div class="wifi">▲</div>
+        <div class="battery">▉</div>
       </div>
-      <button id="save-contact">Als Kontakt speichern</button>
     </div>
+
+    <div class="main-content">
+      <div class="contact-card">
+        <h1>Kontakt Details</h1>
+        <div id="contact-details">
+          <p>Lade Kontaktdetails...</p>
+        </div>
+        <div class="button-group">
+          <button id="save-contact" class="button save-button">
+            Als Kontakt speichern
+          </button>
+          <button id="install-app" class="button cancel-button">
+            App installieren
+          </button>
+        </div>
+      </div>
+    </div>
+
     <script type="module" src="/js/view-contact.js"></script>
+    <script>
+      // Update time in status bar
+      function updateTime() {
+        const now = new Date();
+        let hours = now.getHours();
+        let minutes = now.getMinutes();
+        if (minutes < 10) minutes = "0" + minutes;
+        document.getElementById(
+          "current-time"
+        ).textContent = `${hours}:${minutes}`;
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        updateTime();
+        setInterval(updateTime, 60000);
+
+        // Hide install button if not installable
+        const installBtn = document.getElementById("install-app");
+        if (installBtn) {
+          if (!window.BeforeInstallPromptEvent) {
+            installBtn.style.display = "none";
+          }
+        }
+      });
+    </script>
   </body>
 </html>
