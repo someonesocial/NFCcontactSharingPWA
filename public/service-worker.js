@@ -3,18 +3,19 @@ importScripts(
 );
 
 // Cache-Namen definieren
-const CACHE_NAME = "nfc-contacts-v1";
+const CACHE_NAME = "nfc-contacts-v2";
 
 // Zu cachende Dateien
 const RESOURCES_TO_CACHE = [
   "/",
   "/index.html",
-  "/contact.html",
   "/css/main.css",
   "/js/app.js",
   "/js/contacts.js",
+  "/js/local-storage.js",
   "/js/firebase-config.js",
-  "/js/view-contact.js",
+  "/js/nfc.js",
+  "/js/auth.js",
   "/manifest.json",
 ];
 
