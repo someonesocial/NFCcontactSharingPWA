@@ -1,6 +1,6 @@
 # Dokumentation "NFC Contact Sharing PWA"
 
-_Paul Klemm_Marius Wagner_Elia Küstner_Julian Köhnlein_Simon Vier_
+_Paul Klemm, Marius Wagner, Elia Küstner, Julian Köhnlein, Simon Vier_
 _ON23-3, Juni 2024_
 
 ## Inhaltsverzeichnis
