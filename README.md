@@ -2,7 +2,7 @@
 
 _Paul Klemm, Marius Wagner, Elia Küstner, Julian Köhnlein, Simon Vier_
 
-_ON23-3, Juni 2024_
+_ON23, Februar 2025_
 
 ## Inhaltsverzeichnis
 
@@ -436,6 +436,7 @@ npm install -g firebase-tools
 
 1. Erstellen Sie ein Firebase-Projekt in der [Firebase Console](https://console.firebase.google.com/).
 2. Kopieren Sie die Firebase-Konfigurationswerte in eine `.env`-Datei basierend auf der bereitgestellten `.env.example`-Datei.
+3. Fügen Sie die Firebase-Konfigurationswerte die `public/js/firebase-config.js`-Datei ein.
 
 ```env
 FIREBASE_API_KEY="Ihr-API-Schlüssel"
