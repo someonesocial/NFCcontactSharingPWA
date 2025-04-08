@@ -1,285 +1,151 @@
 <!DOCTYPE html>
 <html lang="de">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NFC Kontakt App</title>
-    <link rel="stylesheet" href="/css/main.css" />
-    <link rel="manifest" href="/manifest.json" />
-  </head>
-  <body>
-    <div class="main-content">
-      <!-- NFC Scan View -->
-      <div class="scan-view active" id="scanView">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NFC Kontakt App</title>
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="manifest" href="/manifest.json" />
+</head>
+<body>
+  <main class="main-content">
+    <!-- NFC Scan View -->
+    <section class="scan-view active" id="scanView">
+      <div class="nfc-icon">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z" fill="#CBC4DC"/>
+          <path d="M8 12C8 9.79 9.79 8 12 8" stroke="#CBC4DC" stroke-width="2"/>
+          <path d="M7 12C7 9.24 9.24 7 12 7" stroke="#CBC4DC" stroke-width="2"/>
+          <path d="M6 12C6 8.69 8.69 6 12 6" stroke="#CBC4DC" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="scan-text">NFC-Chip jetzt einscannen</div>
+      <button id="startScan" class="button save-button" type="button">Scan starten</button>
+    </section>
+
+    <!-- Kontakt-Details View (erscheint nach Scan) -->
+    <section class="contact-details" id="contactDetails">
+      <div class="contact-card">
+        <div class="close-btn" onclick="showView('scanView')" aria-label="Schließen">✕</div>
+        <div id="contact-info" class="contact-info">
+          <!-- Kontaktdetails werden hier dynamisch eingefügt -->
+        </div>
+        <div class="button-group">
+          <button class="button save-button" id="save-contact-btn" type="button">Speichern</button>
+          <button class="button cancel-button" onclick="showView('scanView')" type="button">Verwerfen</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Kontakte-Liste View -->
+    <section class="contacts-list" id="contactsList">
+      <div class="search-bar">
+        <input type="text" id="search-contacts" class="form-input" placeholder="Kontakte suchen" />
+        <span class="search-icon">🔍</span>
+      </div>
+      <div id="contacts-container">
+        <!-- Kontakte werden hier aus dem Local Storage geladen -->
+      </div>
+    </section>
+
+    <!-- Meine Daten (Add Contact) View -->
+    <section class="add-contact" id="addContact">
+      <h1 class="form-title">Erstellen Sie Ihren eigenen Kontakt</h1>
+      <div class="form-container">
+      <form id="contact-form">
+        <div class="form-group">
+          <input type="text" id="lastName" class="form-input" placeholder="Nachname*" required />
+        </div>
+        <div class="form-group">
+          <input type="text" id="firstName" class="form-input" placeholder="Vorname*" required />
+        </div>
+        <div class="form-group">
+          <input type="text" id="company" class="form-input" placeholder="Firma*" required />
+        </div>
+        <div class="form-group">
+          <input type="text" id="position" class="form-input" placeholder="Position*" required />
+        </div>
+        <div class="form-group">
+          <input type="email" id="email" class="form-input" placeholder="E-Mail*" required />
+        </div>
+        <div class="form-group">
+          <input type="text" id="address" class="form-input" placeholder="Adresse*" required />
+        </div>
+        <div class="form-group">
+          <input type="tel" id="phoneNumber" class="form-input" placeholder="Telefon*" required />
+        </div>
+        <div class="form-group">
+          <input type="text" id="website" class="form-input" placeholder="Website" />
+        </div>
+        <script>
+          // Präfix "https://" zu Website-URL hinzufügen, falls nicht vorhanden
+          document.getElementById('contact-form').addEventListener('submit', function(e) {
+            const urlInput = document.getElementById('website');
+            if (urlInput.value && !urlInput.value.startsWith('http')) {
+              urlInput.value = 'https://' + urlInput.value;
+            }
+          });
+        </script>
+        <div class="button-group">
+          <button type="submit" class="button save-button">Speichern</button>
+          <button type="button" id="write-nfc-btn" class="button write-nfc-button">Auf NFC-Chip schreiben</button>
+        </div>
+      </form>
+    </div>
+    </section>
+
+    <!-- Auf NFC-Chip schreiben View -->
+    <section class="write-to-chip" id="writeToChip">
+      <div class="contact-card">
+        <div class="close-btn" onclick="showView('addContact')" aria-label="Schließen">✕</div>
         <div class="nfc-icon">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z"
-              fill="#AAAABC"
-            />
-            <path
-              d="M8 12C8 9.79 9.79 8 12 8"
-              stroke="#AAAABC"
-              stroke-width="2"
-            />
-            <path
-              d="M7 12C7 9.24 9.24 7 12 7"
-              stroke="#AAAABC"
-              stroke-width="2"
-            />
-            <path
-              d="M6 12C6 8.69 8.69 6 12 6"
-              stroke="#AAAABC"
-              stroke-width="2"
-            />
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z" fill="#CBC4DC"/>
+            <path d="M8 12C8 9.79 9.79 8 12 8" stroke="#CBC4DC" stroke-width="2"/>
+            <path d="M7 12C7 9.24 9.24 7 12 7" stroke="#CBC4DC" stroke-width="2"/>
+            <path d="M6 12C6 8.69 8.69 6 12 6" stroke="#CBC4DC" stroke-width="2"/>
           </svg>
         </div>
-        <div class="scan-text">NFC-Chip jetzt einscannen</div>
-        <button id="startScan" class="button save-button">Scan starten</button>
-      </div>
-
-      <!-- Contact Details View -->
-      <div class="contact-details" id="contactDetails">
-        <div class="contact-card">
-          <div class="close-btn" onclick="showView('scanView')">✕</div>
-          <div id="contact-info" class="contact-info">
-            <!-- Contact details will be populated dynamically -->
-          </div>
-          <div class="button-group">
-            <button class="button save-button" id="save-contact-btn">
-              Speichern
-            </button>
-            <button class="button cancel-button" onclick="showView('scanView')">
-              Verwerfen
-            </button>
-          </div>
+        <div class="scan-text">
+          NFC-Chip jetzt ans Gerät halten, um den Kontakt darauf zu schreiben.
         </div>
       </div>
+    </section>
+  </main>
 
-      <!-- Contacts List View -->
-      <div class="contacts-list" id="contactsList">
-        <div class="search-bar">
-          <input
-            type="text"
-            id="search-contacts"
-            placeholder="Kontakte suchen"
-            class="form-input"
-          />
-          <span>🔍</span>
-        </div>
-
-        <div id="contacts-container">
-          <!-- Contacts will be populated dynamically from local storage -->
-        </div>
+  <nav class="navigation">
+    <div class="nav-item" onclick="showView('scanView')">
+      <div class="nav-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z" fill="#49454F"/>
+          <path d="M8 12C8 9.79 9.79 8 12 8" stroke="#49454F" stroke-width="2"/>
+          <path d="M7 12C7 9.24 9.24 7 12 7" stroke="#49454F" stroke-width="2"/>
+          <path d="M6 12C6 8.69 8.69 6 12 6" stroke="#49454F" stroke-width="2"/>
+        </svg>
       </div>
-
-      <!-- Add Contact View -->
-      <div class="add-contact" id="addContact">
-        <div class="form-title">Erstellen Sie Ihren eigenen Kontakt</div>
-
-        <form id="contact-form">
-          <div class="form-group">
-            <input
-              type="text"
-              id="lastName"
-              class="form-input"
-              placeholder="Nachname*"
-              required
-            />
-          </div>
-
-          <div class="form-group">
-            <input
-              type="text"
-              id="firstName"
-              class="form-input"
-              placeholder="Vorname*"
-              required
-            />
-          </div>
-
-          <div class="form-group">
-            <input
-              type="text"
-              id="company"
-              class="form-input"
-              placeholder="Firma*"
-              required
-            />
-          </div>
-
-          <div class="form-group">
-            <input
-              type="text"
-              id="position"
-              class="form-input"
-              placeholder="Position*"
-              required
-            />
-          </div>
-
-          <div class="form-group">
-            <input
-              type="email"
-              id="email"
-              class="form-input"
-              placeholder="E-Mail*"
-              required
-            />
-          </div>
-
-          <div class="form-group">
-            <input
-              type="text"
-              id="address"
-              class="form-input"
-              placeholder="Adresse*"
-              required
-            />
-          </div>
-
-          <div class="form-group">
-            <input
-              type="tel"
-              id="phoneNumber"
-              class="form-input"
-              placeholder="Telefon*"
-              required
-            />
-          </div>
-
-          <div class="form-group">
-            <input
-              type="text"
-              id="website"
-              class="form-input"
-              placeholder="Website"
-            />
-          </div>
-
-          <script>
-            document.getElementById('contact-form').addEventListener('submit', function(e) {
-              const urlInput = document.getElementById('website');
-              if (!urlInput.value.startsWith('http')) {
-                urlInput.value = 'https://' + urlInput.value;
-              }
-            });
-          </script>
-
-          <div class="button-group">
-            <button type="submit" class="button save-button">Speichern</button>
-            <button
-              type="button"
-              id="write-nfc-btn"
-              class="button write-nfc-button"
-            >
-              Auf NFC-Chip schreiben
-            </button>
-          </div>
-        </form>
-      </div>
-
-      <!-- Write to NFC Chip View -->
-      <div class="write-to-chip" id="writeToChip">
-        <div class="contact-card">
-          <div class="close-btn" onclick="showView('addContact')">✕</div>
-          <div class="nfc-icon">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z"
-                fill="#AAAABC"
-              />
-              <path
-                d="M8 12C8 9.79 9.79 8 12 8"
-                stroke="#AAAABC"
-                stroke-width="2"
-              />
-              <path
-                d="M7 12C7 9.24 9.24 7 12 7"
-                stroke="#AAAABC"
-                stroke-width="2"
-              />
-              <path
-                d="M6 12C6 8.69 8.69 6 12 6"
-                stroke="#AAAABC"
-                stroke-width="2"
-              />
-            </svg>
-          </div>
-          <div class="scan-text">
-            NFC-Chip jetzt ans Gerät halten, um den Kontakt darauf zu schreiben.
-          </div>
-        </div>
-      </div>
+      <span>Scanner</span>
     </div>
-
-    <div class="navigation">
-      <div class="nav-item" onclick="showView('scanView')">
-        <div class="nav-icon">
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z"
-              fill="#000"
-            />
-            <path d="M8 12C8 9.79 9.79 8 12 8" stroke="#000" stroke-width="2" />
-            <path d="M7 12C7 9.24 9.24 7 12 7" stroke="#000" stroke-width="2" />
-            <path d="M6 12C6 8.69 8.69 6 12 6" stroke="#000" stroke-width="2" />
-          </svg>
-        </div>
-        Scanner
+    <div class="nav-item" onclick="showView('contactsList')">
+      <div class="nav-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="8" r="4" stroke="#49454F" stroke-width="2"/>
+          <path d="M20 19C20 15.134 16.418 12 12 12C7.582 12 4 15.134 4 19" stroke="#49454F" stroke-width="2"/>
+        </svg>
       </div>
-      <div class="nav-item" onclick="showView('contactsList')">
-        <div class="nav-icon">
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle cx="12" cy="8" r="4" stroke="#000" stroke-width="2" />
-            <path
-              d="M20 19C20 15.134 16.418 12 12 12C7.582 12 4 15.134 4 19"
-              stroke="#000"
-              stroke-width="2"
-            />
-          </svg>
-        </div>
-        Kontakte
-      </div>
-      <div class="nav-item" onclick="showView('addContact')">
-        <div class="nav-icon">
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle cx="12" cy="12" r="9" stroke="#000" stroke-width="2" />
-            <path d="M12 8V16" stroke="#000" stroke-width="2" />
-            <path d="M8 12H16" stroke="#000" stroke-width="2" />
-          </svg>
-        </div>
-        Meine Daten
-      </div>
+      <span>Kontakte</span>
     </div>
+    <div class="nav-item" onclick="showView('addContact')">
+      <div class="nav-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="9" stroke="#49454F" stroke-width="2"/>
+          <path d="M12 8V16" stroke="#49454F" stroke-width="2"/>
+          <path d="M8 12H16" stroke="#49454F" stroke-width="2"/>
+        </svg>
+      </div>
+      <span>Meine Daten</span>
+    </div>
+  </nav>
 
-    <!-- Import JS modules -->
-    <script type="module" src="/js/app.js"></script>
-  </body>
+  <script type="module" src="/js/app.js"></script>
+</body>
 </html>

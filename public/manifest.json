@@ -1,9 +1,9 @@
 {
-    "name": "NFC Contact Sharing",
-    "short_name": "NFC Share",
-    "theme_color": "#2196f3",
-    "background_color": "#2196f3",
-    "display": "standalone",
+  "name": "NFC Contact Sharing",
+  "short_name": "NFC Share",
+  "theme_color": "#CBC4DC",
+  "background_color": "#ECEAF4",
+  "display": "standalone",
     "icons": [
     {
       "src": "icons/windows11/SmallTile.scale-100.png",

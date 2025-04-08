@@ -1,91 +1,110 @@
+/* Material Design 3 Theme Styles */
+
+/* Reset and base font */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
-    Arial, sans-serif;
 }
-
+html, body {
+  height: 100%;
+}
 body {
-  background-color: #fff;
   max-width: 450px;
   margin: 0 auto;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
+  height: 100%;
+  background-color: #FFFFFF; /* Hintergrundfarbe */
+  color: #49454F;           /* Dunkle Textfarbe */
+  font-family: 'Roboto', sans-serif; /* Android-ähnliche Schriftart */
 }
 
+/* Farbpalette (basierend auf Material Design 3) */
+:root {
+  --md3-bg: #FFFFFF;
+  --md3-surface: #ECEAF4;
+  --md3-element: #CBC4DC;
+  --md3-text-dark: #49454F;
+  --md3-text-light: #ECE6F0;
+}
+
+/* Haupt-Container */
 .main-content {
-  flex: 1;
-  padding: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center; /* Changed from flex-start to center for vertical centering */
-  position: relative;
+  justify-content: flex-start;
+  align-items: stretch;
+  height: 100vh;
   overflow-y: auto;
-  padding-top: 10px; /* Keep this for some breathing room at the top */
+  padding: 10px 20px 20px;
+  position: relative;
 }
 
-/* Specifically center the active view on the first page */
-.scan-view.active {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 70vh; /* Add minimum height to ensure proper centering in the available space */
-}
-
-.scan-view,
-.contact-details,
-.contacts-list,
-.add-contact,
-.write-to-chip {
+/* Seiten/Views (standardmäßig versteckt) */
+.scan-view, .contact-details, .contacts-list, .add-contact, .write-to-chip {
   width: 100%;
   display: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
-
-.scan-view.active,
-.contact-details.active,
-.contacts-list.active,
-.add-contact.active,
-.write-to-chip.active {
+.scan-view.active, .contact-details.active, .contacts-list.active,
+.add-contact.active, .write-to-chip.active {
   display: flex;
 }
+/* Scan-View Inhalt vertikal zentrieren */
+.scan-view.active {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+/* Kontakte- und Meine-Daten-View oben bündig mit Padding */
+.contacts-list, .add-contact {
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-top: 20px;
+}
 
+/* NFC-Icon Kreis */
 .nfc-icon {
   width: 150px;
   height: 150px;
-  background-color: #f0f0f5;
-  border-radius: 50%;
+  background-color: #ECEAF4;
+  border-radius: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 30px;
 }
-
 .nfc-icon svg {
   width: 60px;
   height: 60px;
 }
+.nfc-icon svg path {
+  fill: #CBC4DC;
+  stroke: #CBC4DC;
+}
 
+/* Scan-Text unter dem Icon */
 .scan-text {
   font-size: 16px;
   text-align: center;
   margin-bottom: 10px;
 }
 
+/* Karten-Layout für Kontakt-Details und NFC-Schreib-View */
 .contact-card {
-  background-color: #f0f0f5;
-  border-radius: 15px;
+  background-color: #ECEAF4;
+  border-radius: 50px;
   padding: 20px;
   width: 100%;
   position: relative;
 }
+.contact-card h1 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
 
+/* Schließen-Button (X) in Karten */
 .close-btn {
   position: absolute;
   right: 15px;
@@ -94,63 +113,61 @@ body {
   cursor: pointer;
 }
 
+/* Kontakt-Info Felder */
 .contact-info {
   display: flex;
   flex-direction: column;
   gap: 8px;
   margin-bottom: 20px;
 }
-
 .contact-field {
   margin-bottom: 5px;
 }
-
 .field-label {
   font-weight: bold;
 }
-
 .field-value {
   margin-left: 8px;
 }
-
 .website {
   text-decoration: underline;
-  color: #000;
+  color: #49454F;
 }
 
+/* Buttons */
 .button-group {
   display: flex;
   gap: 10px;
   margin-top: 15px;
 }
-
 .button {
   padding: 10px 20px;
-  border-radius: 25px;
+  border-radius: 50px;
   border: none;
   font-weight: bold;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
-
+/* Primärer Button (ausgefüllt) */
 .save-button {
-  background-color: #333;
-  color: white;
+  background-color: #49454F;
+  color: #ECE6F0;
+}
+/* Sekundäre Buttons (tonal) */
+.cancel-button, .write-nfc-button {
+  background-color: #CBC4DC;
+  color: #49454F;
 }
 
-.cancel-button,
-.write-nfc-button {
-  background-color: #e0e0e5;
-  color: #333;
-}
-
+/* Navigationsleiste (unten) */
 .navigation {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   padding: 15px 0;
-  background-color: #f0f0f5;
-  border-top: 1px solid #e0e0e5;
+  background-color: #ECEAF4;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
 }
-
 .nav-item {
   display: flex;
   flex-direction: column;
@@ -158,51 +175,64 @@ body {
   font-size: 12px;
   cursor: pointer;
 }
-
 .nav-icon {
   margin-bottom: 5px;
 }
+.nav-icon svg {
+  width: 24px;
+  height: 24px;
+}
+.nav-icon svg path {
+  fill: #49454F;
+  stroke: #49454F;
+}
 
+/* Suchleiste */
 .search-bar {
-  background-color: #f0f0f5;
+  background-color: #ECEAF4;
   padding: 10px 15px;
-  border-radius: 25px;
+  border-radius: 50px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
   width: 100%;
 }
-
-.contacts-list {
-  padding-top: 20px;
-  align-items: flex-start;
+.search-bar input {
+  border: none;
+  background: none;
+  width: 90%;
+  font-size: 16px;
+}
+.search-bar .search-icon {
+  font-size: 18px;
 }
 
+/* Kontaktliste Eintrag */
 .contact-item {
   display: flex;
+  align-items: center;
   padding: 12px 0;
   width: 100%;
-  border-bottom: 1px solid #f0f0f5;
+  border-bottom: 1px solid #CBC4DC;
   cursor: pointer;
 }
-
 .contact-avatar {
   width: 40px;
   height: 40px;
-  border-radius: 50%;
-  background-color: #f0f0f5;
+  border-radius: 100%;
+  background-color: #CBC4DC;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-right: 15px;
   font-weight: bold;
+  color: #49454F;
 }
-
 .contact-name {
   font-weight: bold;
   margin-bottom: 3px;
 }
-
 .contact-company,
 .contact-email {
   font-size: 14px;
@@ -210,30 +240,37 @@ body {
   margin-bottom: 3px;
 }
 
+/* Formular-Container zentrieren */
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%; /* Optional, falls vertikale Zentrierung auch gewünscht ist */
+}
 .form-group {
   margin-bottom: 15px;
   width: 100%;
 }
-
 .form-title {
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 20px;
   align-self: flex-start;
 }
-
 .form-input {
   padding: 12px 15px;
-  border-radius: 15px;
+  border-radius: 50px;
   border: none;
   width: 100%;
-  background-color: #f0f0f5;
+  background-color: #ECEAF4;
+}
+.form-input:focus {
+  outline: 2px solid #CBC4DC;
+  outline-offset: -2px;
 }
 
-input:focus {
-  outline: none;
-}
-
+/* Overlay (z.B. für Ladeanzeige) */
 #overlay {
   position: fixed;
   top: 0;
@@ -249,11 +286,9 @@ input:focus {
   flex-direction: column;
   z-index: 1000;
 }
-
 #overlay button {
   margin-top: 20px;
   padding: 10px;
   font-size: 16px;
   cursor: pointer;
-  pointer-events: auto;
 }
