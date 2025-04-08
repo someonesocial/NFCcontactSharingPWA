@@ -154,12 +154,21 @@
 
           <div class="form-group">
             <input
-              type="url"
+              type="text"
               id="website"
               class="form-input"
               placeholder="Website"
             />
           </div>
+
+          <script>
+            document.getElementById('contact-form').addEventListener('submit', function(e) {
+              const urlInput = document.getElementById('website');
+              if (!urlInput.value.startsWith('http')) {
+                urlInput.value = 'https://' + urlInput.value;
+              }
+            });
+          </script>
 
           <div class="button-group">
             <button type="submit" class="button save-button">Speichern</button>
