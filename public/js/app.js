@@ -238,10 +238,14 @@ function displayContactDetails(contact) {
 
   let html = "";
 
+  // Remove debug section that was showing raw contact data
+  // No need to display technical information to users
   // Add a debug section (always show in this case to help troubleshoot)
+  /*
   html += `<div style="font-size:10px; color:#999; margin-bottom:10px">Debug: ${JSON.stringify(
     normalizedContact
   )}</div>`;
+  */
 
   if (normalizedContact.firstName || normalizedContact.lastName) {
     html += `
