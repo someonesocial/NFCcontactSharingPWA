@@ -216,7 +216,7 @@ Das Projekt resultierte in einer voll funktionsfähigen Progressive Web App mit 
 1. **Installierbarkeit**:
 
    - Web App Manifest mit Icons und Theme-Farben
-   - "Add to Homescreen" Funktionalität
+   - "Zum Startbildschirm hinzufügen"-Funktionalität
    - Standalone-Modus ohne Browser-UI
 
 2. **Offline-Funktionalität**:
@@ -260,10 +260,10 @@ Das Projekt resultierte in einer voll funktionsfähigen Progressive Web App mit 
 
 Die Anwendung erfüllt die wichtigsten Web Vitals:
 
-- First Contentful Paint: < 1.5s
-- Largest Contentful Paint: < 2.5s
-- Cumulative Layout Shift: < 0.1
-- First Input Delay: < 100ms
+- First Contentful Paint: < 1,5 Sekunden
+- Largest Contentful Paint: < 2,5 Sekunden
+- Cumulative Layout Shift: < 0,1
+- First Input Delay: < 100 Millisekunden
 
 ## 7. Reflexion
 
@@ -424,89 +424,89 @@ firebase deploy
    - NFC-fähiges Gerät erforderlich
    - Einige ältere oder günstigere Geräte unterstützen möglicherweise keine NFC-Funktionen
 
-### 2. Install Dependencies
+### Installation der Abhängigkeiten
 
-This project uses Firebase CLI for deployment and management. Install it globally if not already installed:
+Dieses Projekt verwendet Firebase CLI für Deployment und Management. Installieren Sie es global, falls noch nicht geschehen:
 
 ```bash
 npm install -g firebase-tools
 ```
 
-### 3. Configure Firebase
+### Firebase konfigurieren
 
-1. Create a Firebase project in the [Firebase Console](https://console.firebase.google.com/).
-2. Copy the Firebase configuration values into a `.env` file based on the `.env.example` file provided.
+1. Erstellen Sie ein Firebase-Projekt in der [Firebase Console](https://console.firebase.google.com/).
+2. Kopieren Sie die Firebase-Konfigurationswerte in eine `.env`-Datei basierend auf der bereitgestellten `.env.example`-Datei.
 
 ```env
-FIREBASE_API_KEY="your-api-key"
-FIREBASE_AUTH_DOMAIN="your-auth-domain"
-FIREBASE_PROJECT_ID="your-project-id"
-FIREBASE_STORAGE_BUCKET="your-storage-bucket"
-FIREBASE_MESSAGING_SENDER_ID="your-messaging-sender-id"
-FIREBASE_APP_ID="your-app-id"
+FIREBASE_API_KEY="Ihr-API-Schlüssel"
+FIREBASE_AUTH_DOMAIN="Ihre-Auth-Domain"
+FIREBASE_PROJECT_ID="Ihre-Projekt-ID"
+FIREBASE_STORAGE_BUCKET="Ihr-Storage-Bucket"
+FIREBASE_MESSAGING_SENDER_ID="Ihre-Messaging-Sender-ID"
+FIREBASE_APP_ID="Ihre-App-ID"
 ```
 
-### 4. Deploy the App
+### App deployen
 
-1. Login to Firebase CLI:
+1. Bei Firebase CLI anmelden:
 
 ```bash
 firebase login
 ```
 
-2. Initialize Firebase in the project directory:
+2. Firebase im Projektverzeichnis initialisieren:
 
 ```bash
 firebase init
 ```
 
-3. Deploy the app:
+3. App deployen:
 
 ```bash
 firebase deploy
 ```
 
-## Usage
+## Nutzung
 
-1. Open the app in a browser that supports Web NFC (e.g., Chrome for Android).
-2. Create a new contact by filling out the form.
-3. Save the contact locally or write it to an NFC tag.
-4. Scan NFC tags to retrieve and display contact information.
+1. Öffnen Sie die App in einem Browser, der Web NFC unterstützt (z.B. Chrome für Android).
+2. Erstellen Sie einen neuen Kontakt, indem Sie das Formular ausfüllen.
+3. Speichern Sie den Kontakt lokal oder schreiben Sie ihn auf einen NFC-Tag.
+4. Scannen Sie NFC-Tags, um Kontaktinformationen abzurufen und anzuzeigen.
 
-## Project Structure
+## Projektstruktur
 
 ```
 .
 ├── public/
-│   ├── index.html          # Main HTML file
+│   ├── index.html          # Haupt-HTML-Datei
 │   ├── css/                # Stylesheets
-│   ├── js/                 # JavaScript modules
-│   ├── manifest.json       # PWA manifest
-│   ├── service-worker.js   # Service Worker for offline support
-│   └── icons/              # App icons
-├── firebase.json           # Firebase configuration
-├── firestore.rules         # Firestore security rules
-├── firestore.indexes.json  # Firestore indexes
-├── .env.example            # Example environment variables
-├── README.md               # Project documentation
-└── package.json            # Project dependencies
+│   ├── js/                 # JavaScript-Module
+│   ├── manifest.json       # PWA-Manifest
+│   ├── service-worker.js   # Service Worker für Offline-Unterstützung
+│   └── icons/              # App-Icons
+├── firebase.json           # Firebase-Konfiguration
+├── firestore.rules         # Firestore-Sicherheitsregeln
+├── firestore.indexes.json  # Firestore-Indizes
+├── .env.example            # Beispiel für Umgebungsvariablen
+├── README.md               # Projektdokumentation
+└── package.json            # Projektabhängigkeiten
 ```
 
-## Contributing
+## Mitwirken
 
-Contributions are welcome! Please follow these steps:
+Beiträge sind willkommen! Bitte folgen Sie diesen Schritten:
 
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Commit your changes and push the branch.
-4. Open a pull request.
+1. Forken Sie das Repository.
+2. Erstellen Sie einen neuen Branch für Ihr Feature oder Ihren Bugfix.
+3. Committen Sie Ihre Änderungen und pushen Sie den Branch.
+4. Öffnen Sie einen Pull Request.
 
-## License
+## Lizenz
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+Dieses Projekt ist unter der MIT-Lizenz lizenziert. Siehe die [LICENSE](LICENSE)-Datei für Details.
 
-## Acknowledgments
+## Danksagungen
 
-- [Firebase](https://firebase.google.com/) for backend services.
-- [Workbox](https://developers.google.com/web/tools/workbox) for simplifying Service Worker implementation.
-- [Web NFC API](https://developer.mozilla.org/en-US/docs/Web/API/Web_NFC_API) for NFC functionality.
+- [Firebase](https://firebase.google.com/) für Backend-Dienste.
+- [Workbox](https://developers.google.com/web/tools/workbox) für die Vereinfachung der Service-Worker-Implementierung.
+- [Web NFC API](https://developer.mozilla.org/en-US/docs/Web/API/Web_NFC_API) für NFC-Funktionalität.
