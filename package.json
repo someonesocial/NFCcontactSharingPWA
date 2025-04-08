@@ -1,16 +1,26 @@
 {
   "name": "nfccontactsharingpwa",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Eine Vue.js PWA zur Verwaltung von Kontakten via NFC",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
   },
-  "keywords": [],
+  "keywords": ["vue", "pwa", "nfc", "contacts"],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "firebase": "^11.3.1",
-    "firebase-tools": "^13.31.2"
+    "core-js": "^3.31.1",
+    "firebase": "^10.8.0",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.4",
+    "register-service-worker": "^1.7.2"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~5.0.8",
+    "@vue/cli-plugin-pwa": "~5.0.8",
+    "@vue/cli-plugin-router": "~5.0.8",
+    "@vue/cli-service": "~5.0.8"
   }
 }
