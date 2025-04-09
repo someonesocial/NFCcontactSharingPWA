@@ -7,7 +7,8 @@
   box-sizing: border-box;
 }
 html, body {
-  height: 100%;
+  height: 100vh; /* Vollständige Höhe des Viewports */
+  overflow: hidden; /* Verhindert Scrollen */
 }
 body {
   max-width: 450px;
@@ -31,10 +32,9 @@ body {
 .main-content {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
-  height: 100vh;
-  overflow-y: auto;
+  justify-content: space-between; /* Platz für Navigation unten */
+  height: 100%; /* Nimmt die gesamte Höhe des Viewports ein */
+  overflow: hidden; /* Kein Scrollen innerhalb des Hauptinhalts */
   padding: 10px 20px 20px;
   position: relative;
 }
@@ -63,10 +63,10 @@ body {
   padding-top: 20px;
 }
 
-/* NFC-Icon Kreis */
+/* Größeren Kreis für die Scan-Seite */
 .nfc-icon {
-  width: 150px;
-  height: 150px;
+  width: 200px; /* Erhöht die Breite */
+  height: 200px; /* Erhöht die Höhe */
   background-color: #ECEAF4;
   border-radius: 100%;
   display: flex;
@@ -75,8 +75,8 @@ body {
   margin-bottom: 30px;
 }
 .nfc-icon svg {
-  width: 60px;
-  height: 60px;
+  width: 100px;
+  height: 100px;
 }
 .nfc-icon svg path {
   fill: #CBC4DC;
@@ -129,6 +129,12 @@ body {
 .field-value {
   margin-left: 8px;
 }
+.contact-field .field-value {
+  word-wrap: break-word; /* Lange Wörter umbrechen */
+  overflow-wrap: break-word; /* Alternative für bessere Browser-Kompatibilität */
+  max-width: 100%; /* Begrenzung auf die Breite des Containers */
+  display: inline-block; /* Verhindert, dass der Text über den Container hinausgeht */
+}
 .website {
   text-decoration: underline;
   color: #49454F;
@@ -162,47 +168,76 @@ body {
 /* Navigationsleiste (unten) */
 .navigation {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between; /* Gleichmäßige Verteilung der Icons */
   align-items: center;
-  padding: 15px 0;
+  padding: 15px 20px; /* Abstand innerhalb der Leiste */
   background-color: #ECEAF4;
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed; /* Fix the navigation bar at the bottom */
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }
+
 .nav-item {
+  flex: 1; /* Jeder Navigationseintrag nimmt den gleichen Platz ein */
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center; /* Zentriert das Icon und den Text */
   font-size: 12px;
   cursor: pointer;
+  position: relative;
 }
+
 .nav-icon {
-  margin-bottom: 5px;
+  margin-bottom: 5px; /* Abstand zwischen Icon und Text */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+.nav-item.active .nav-icon {
+  background-color: #cac4da; /* Hintergrundfarbe für aktives Icon */
+  color: #49454F; /* Textfarbe des Icons */
+  border-radius: 50px; /* Runde Pille */
+  padding: 8px 16px; /* Abstand innerhalb der Pille */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .nav-icon svg {
   width: 24px;
   height: 24px;
 }
+
 .nav-icon svg path {
-  fill: #49454F;
-  stroke: #49454F;
+  fill: currentColor; /* Farbe des Icons basierend auf der Textfarbe */
 }
 
 /* Suchleiste */
 .search-bar {
   background-color: #ECEAF4;
-  padding: 10px 15px;
-  border-radius: 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+
+padding: 15px 20px; /* Erhöht den Innenabstand für größere Klickfläche */
+  border-radius: 50px;
+  border: none;
   width: 100%;
+  font-size: 18px; /* Größere Schrift für bessere Lesbarkeit */
 }
 .search-bar input {
   border: none;
   background: none;
   width: 90%;
-  font-size: 16px;
+  font-size: 16px; /* Optional: Schriftgröße leicht reduzieren */
+  padding: 5px 10px; /* Reduziert den Innenabstand */
+  border-radius: 50px;
+  background-color: #ECEAF4;
 }
 .search-bar .search-icon {
   font-size: 18px;
@@ -213,7 +248,8 @@ body {
   display: flex;
   align-items: center;
   padding: 12px 0;
-  width: 100%;
+  width: 90%; /* Setzt die Breite auf 90% */
+  margin: 0 auto; /* Zentriert die Liste horizontal */
   border-bottom: 1px solid #CBC4DC;
   cursor: pointer;
 }
@@ -259,11 +295,12 @@ body {
   align-self: flex-start;
 }
 .form-input {
-  padding: 12px 15px;
+  padding: 15px 20px; /* Erhöht den Innenabstand für größere Klickfläche */
   border-radius: 50px;
   border: none;
   width: 100%;
   background-color: #ECEAF4;
+  font-size: 18px; /* Größere Schrift für bessere Lesbarkeit */
 }
 .form-input:focus {
   outline: 2px solid #CBC4DC;
