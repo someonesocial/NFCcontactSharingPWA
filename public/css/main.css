@@ -6,7 +6,8 @@
   padding: 0;
   box-sizing: border-box;
 }
-html, body {
+html,
+body {
   height: 100vh; /* Vollständige Höhe des Viewports */
   overflow: hidden; /* Verhindert Scrollen */
 }
@@ -14,18 +15,18 @@ body {
   max-width: 450px;
   margin: 0 auto;
   height: 100%;
-  background-color: #FFFFFF; /* Hintergrundfarbe */
-  color: #49454F;           /* Dunkle Textfarbe */
-  font-family: 'Roboto', sans-serif; /* Android-ähnliche Schriftart */
+  background-color: #ffffff; /* Hintergrundfarbe */
+  color: #49454f; /* Dunkle Textfarbe */
+  font-family: "Roboto", sans-serif; /* Android-ähnliche Schriftart */
 }
 
 /* Farbpalette (basierend auf Material Design 3) */
 :root {
-  --md3-bg: #FFFFFF;
-  --md3-surface: #ECEAF4;
-  --md3-element: #CBC4DC;
-  --md3-text-dark: #49454F;
-  --md3-text-light: #ECE6F0;
+  --md3-bg: #ffffff;
+  --md3-surface: #eceaf4;
+  --md3-element: #cbc4dc;
+  --md3-text-dark: #49454f;
+  --md3-text-light: #ece6f0;
 }
 
 /* Haupt-Container */
@@ -40,15 +41,22 @@ body {
 }
 
 /* Seiten/Views (standardmäßig versteckt) */
-.scan-view, .contact-details, .contacts-list, .add-contact, .write-to-chip {
+.scan-view,
+.contact-details,
+.contacts-list,
+.add-contact,
+.write-to-chip {
   width: 100%;
   display: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
-.scan-view.active, .contact-details.active, .contacts-list.active,
-.add-contact.active, .write-to-chip.active {
+.scan-view.active,
+.contact-details.active,
+.contacts-list.active,
+.add-contact.active,
+.write-to-chip.active {
   display: flex;
 }
 /* Scan-View Inhalt vertikal zentrieren */
@@ -57,17 +65,32 @@ body {
   margin-bottom: auto;
 }
 /* Kontakte- und Meine-Daten-View oben bündig mit Padding */
-.contacts-list, .add-contact {
+.contacts-list,
+.add-contact {
   justify-content: flex-start;
   align-items: flex-start;
   padding-top: 20px;
+}
+
+/* Kontakte-Liste View - Stelle sicher, dass es volle Breite hat */
+.contacts-list.active {
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: 0;
+  padding-right: 0;
+  padding: 20px 0; /* Remove horizontal padding */
+}
+
+/* Container für Kontakte - Volle Breite erzwingen */
+#contacts-container {
+  width: 100%;
 }
 
 /* Größeren Kreis für die Scan-Seite */
 .nfc-icon {
   width: 200px; /* Erhöht die Breite */
   height: 200px; /* Erhöht die Höhe */
-  background-color: #ECEAF4;
+  background-color: #eceaf4;
   border-radius: 100%;
   display: flex;
   justify-content: center;
@@ -79,8 +102,8 @@ body {
   height: 100px;
 }
 .nfc-icon svg path {
-  fill: #CBC4DC;
-  stroke: #CBC4DC;
+  fill: #cbc4dc;
+  stroke: #cbc4dc;
 }
 
 /* Scan-Text unter dem Icon */
@@ -92,7 +115,7 @@ body {
 
 /* Karten-Layout für Kontakt-Details und NFC-Schreib-View */
 .contact-card {
-  background-color: #ECEAF4;
+  background-color: #eceaf4;
   border-radius: 50px;
   padding: 20px;
   width: 100%;
@@ -137,7 +160,7 @@ body {
 }
 .website {
   text-decoration: underline;
-  color: #49454F;
+  color: #49454f;
 }
 
 /* Buttons */
@@ -156,13 +179,14 @@ body {
 }
 /* Primärer Button (ausgefüllt) */
 .save-button {
-  background-color: #49454F;
-  color: #ECE6F0;
+  background-color: #49454f;
+  color: #ece6f0;
 }
 /* Sekundäre Buttons (tonal) */
-.cancel-button, .write-nfc-button {
-  background-color: #CBC4DC;
-  color: #49454F;
+.cancel-button,
+.write-nfc-button {
+  background-color: #cbc4dc;
+  color: #49454f;
 }
 
 /* Navigationsleiste (unten) */
@@ -171,7 +195,7 @@ body {
   justify-content: space-between; /* Gleichmäßige Verteilung der Icons */
   align-items: center;
   padding: 15px 20px; /* Abstand innerhalb der Leiste */
-  background-color: #ECEAF4;
+  background-color: #eceaf4;
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
   position: fixed; /* Fix the navigation bar at the bottom */
   bottom: 0;
@@ -199,7 +223,7 @@ body {
 
 .nav-item.active .nav-icon {
   background-color: #cac4da; /* Hintergrundfarbe für aktives Icon */
-  color: #49454F; /* Textfarbe des Icons */
+  color: #49454f; /* Textfarbe des Icons */
   border-radius: 50px; /* Runde Pille */
   padding: 8px 16px; /* Abstand innerhalb der Pille */
   display: flex;
@@ -218,17 +242,20 @@ body {
 
 /* Suchleiste */
 .search-bar {
-  background-color: #ECEAF4;
+  background-color: #eceaf4;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
 
-padding: 15px 20px; /* Erhöht den Innenabstand für größere Klickfläche */
+  padding: 15px 20px; /* Erhöht den Innenabstand für größere Klickfläche */
   border-radius: 50px;
   border: none;
   width: 100%;
   font-size: 18px; /* Größere Schrift für bessere Lesbarkeit */
+  margin-left: 20px;
+  margin-right: 20px;
+  width: calc(100% - 40px);
 }
 .search-bar input {
   border: none;
@@ -237,7 +264,7 @@ padding: 15px 20px; /* Erhöht den Innenabstand für größere Klickfläche */
   font-size: 16px; /* Optional: Schriftgröße leicht reduzieren */
   padding: 5px 10px; /* Reduziert den Innenabstand */
   border-radius: 50px;
-  background-color: #ECEAF4;
+  background-color: #eceaf4;
 }
 .search-bar .search-icon {
   font-size: 18px;
@@ -247,33 +274,70 @@ padding: 15px 20px; /* Erhöht den Innenabstand für größere Klickfläche */
 .contact-item {
   display: flex;
   align-items: center;
-  padding: 12px 0;
-  width: 90%; /* Setzt die Breite auf 90% */
-  margin: 0 auto; /* Zentriert die Liste horizontal */
-  border-bottom: 1px solid #CBC4DC;
+  padding: 15px 10px;
+  width: 100vw; /* Volle Viewport-Breite */
+  max-width: 100vw; /* Nicht über den Viewport hinaus */
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative; /* Für absolute Positionierung des Borders */
   cursor: pointer;
+  border-bottom: 1px solid #cbc4dc; /* Trennlinie */
 }
+
+.contact-item::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: #cbc4dc; /* Trennlinien-Farbe */
+}
+
+.contact-item:last-child::after {
+  display: none; /* Entfernt die Trennlinie beim letzten Kontakt */
+}
+
+/* Anpassung für Kontakt-Avatar und Kontakt-Details Abstand */
 .contact-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 100%;
-  background-color: #CBC4DC;
+  margin-left: 20px; /* Mehr Abstand links für bessere Ausrichtung */
+  width: 50px; /* Größere Avatar-Größe */
+  height: 50px; /* Größere Avatar-Größe */
+  border-radius: 50%; /* Runde Form */
+  background-color: #cbc4dc;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 15px;
+  margin-right: 15px; /* Abstand zwischen Avatar und Text */
   font-weight: bold;
-  color: #49454F;
+  font-size: 18px; /* Größere Schriftgröße für Initialen */
+  color: #49454f;
 }
+
+.contact-details-mini {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .contact-name {
   font-weight: bold;
-  margin-bottom: 3px;
+  font-size: 16px; /* Größere Schriftgröße für den Namen */
+  margin-bottom: 5px; /* Abstand zum nächsten Text */
 }
+
 .contact-company,
 .contact-email {
-  font-size: 14px;
+  font-size: 14px; /* Einheitliche Schriftgröße */
   color: #666;
   margin-bottom: 3px;
+  white-space: nowrap; /* Verhindert Zeilenumbrüche */
+  overflow: hidden; /* Versteckt überfließenden Text */
+  text-overflow: ellipsis; /* Fügt "..." bei überfließendem Text hinzu */
 }
 
 /* Formular-Container zentrieren */
@@ -299,11 +363,11 @@ padding: 15px 20px; /* Erhöht den Innenabstand für größere Klickfläche */
   border-radius: 50px;
   border: none;
   width: 100%;
-  background-color: #ECEAF4;
+  background-color: #eceaf4;
   font-size: 18px; /* Größere Schrift für bessere Lesbarkeit */
 }
 .form-input:focus {
-  outline: 2px solid #CBC4DC;
+  outline: 2px solid #cbc4dc;
   outline-offset: -2px;
 }
 
